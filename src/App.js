@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import {Showlist} from "./components/List.js"
 
 function App() {
   const[value,setValue] = useState("");
@@ -12,7 +13,8 @@ function App() {
   const append = ()=>{
     const data = {
       id:taskNumber,
-      task:value
+      task:value,
+      isGreen:false
     }
     setTaskNumber(taskNumber+1);
     setTask((old_list)=>[...old_list,data])
@@ -25,6 +27,20 @@ function App() {
    
   }
 
+  const completeTask = (id) => {
+    console.log(2222222222)
+     setTask( taskList.map((item)=>{
+ 
+         if(id === item.id){
+          return {...item,isGreen:!item.isGreen };
+         }
+         else{
+          return item;
+         }
+
+     }) );
+  };
+  
   return (
     <div className="App">
       <div className='addTask'>
@@ -32,10 +48,12 @@ function App() {
      <button onClick={append}>Add Task</button>
      </div>
      <div className='list'>
-      {taskList.map((item)=>{ return <div><h1>{item.id}. {item.task}<button onClick={()=>{deleteTask(item.id)}}>x</button></h1> </div> } ) }
+      {taskList.map((item)=>{ return(<Showlist isGreen={item.isGreen} id = {item.id} task={item.task} delete_function={deleteTask} complete_function={completeTask}/>);} ) }
      </div>
     </div>
   );
 }
 
 export default App;
+
+
