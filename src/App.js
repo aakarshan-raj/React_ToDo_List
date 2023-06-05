@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
 
 function App() {
+  const[value,setValue] = useState("");
+  const[taskList,setTask] = useState([]);
+
+  const new_task = (to_append) =>{
+      setValue(to_append.target.value)
+  }
+  const append = ()=>{
+    setTask((old_list)=>[...old_list,value])
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <input placeholder='Task!' onChange={new_task}></input> <button onClick={append}>Add</button>
+     <div>
+      {taskList.map((item)=>{ return <h1>{item}</h1> } ) }
+     </div>
     </div>
   );
 }
